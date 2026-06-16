@@ -1,7 +1,9 @@
+#CAU TRUC Du Lieu
 class Node:
     def __init__(self, du_lieu):
         self.du_lieu = du_lieu
         self.tiep = None
+
 class DanhSachLienKet:
     def __init__(self):
         self.dau = None
@@ -32,6 +34,7 @@ class DanhSachLienKet:
         return self.kich_thuoc
 
     def tim_kiem(self, dieu_kien):
+
         hien_tai = self.dau
         while hien_tai is not None:
             if dieu_kien(hien_tai.du_lieu):
@@ -40,6 +43,7 @@ class DanhSachLienKet:
         return None
 
     def tim_kiem_tat_ca(self, dieu_kien):
+
         ket_qua = DanhSachLienKet()
         hien_tai = self.dau
         while hien_tai is not None:
@@ -67,6 +71,7 @@ class DanhSachLienKet:
         if self.dau is None:
             return False
             
+        # Nếu phần tử cần xóa là phần tử đầu tiên
         if dieu_kien(self.dau.du_lieu):
             self.dau = self.dau.tiep
             self.kich_thuoc -= 1
@@ -75,6 +80,7 @@ class DanhSachLienKet:
         hien_tai = self.dau
         while hien_tai.tiep is not None:
             if dieu_kien(hien_tai.tiep.du_lieu):
+                # Bỏ qua node hiện tại
                 hien_tai.tiep = hien_tai.tiep.tiep
                 self.kich_thuoc -= 1
                 return True
@@ -82,6 +88,7 @@ class DanhSachLienKet:
         return False
         
     def cap_nhat_theo_dieu_kien(self, dieu_kien, du_lieu_moi):
+
         hien_tai = self.dau
         while hien_tai is not None:
             if dieu_kien(hien_tai.du_lieu):
@@ -106,15 +113,120 @@ class DanhSachLienKet:
                     da_doi_cho = True
                 hien_tai = hien_tai.tiep
 
-# CÁC HÀM TIỆN ÍCH
+    def tim_max(self, ham_lay_gia_tri):
+
+        if self.dau is None:
+            return None, None
+        phan_tu_max = self.dau.du_lieu
+        gia_tri_max = ham_lay_gia_tri(phan_tu_max)
+        hien_tai = self.dau.tiep
+        while hien_tai is not None:
+            gia_tri = ham_lay_gia_tri(hien_tai.du_lieu)
+            if gia_tri > gia_tri_max:
+                gia_tri_max = gia_tri
+                phan_tu_max = hien_tai.du_lieu
+            hien_tai = hien_tai.tiep
+        return phan_tu_max, gia_tri_max
+
+    def tim_min(self, ham_lay_gia_tri):
+ 
+        if self.dau is None:
+            return None, None
+        phan_tu_min = self.dau.du_lieu
+        gia_tri_min = ham_lay_gia_tri(phan_tu_min)
+        hien_tai = self.dau.tiep
+        while hien_tai is not None:
+            gia_tri = ham_lay_gia_tri(hien_tai.du_lieu)
+            if gia_tri < gia_tri_min:
+                gia_tri_min = gia_tri
+                phan_tu_min = hien_tai.du_lieu
+            hien_tai = hien_tai.tiep
+        return phan_tu_min, gia_tri_min
+
+class Stack:
+    def __init__(self):
+        self._dinh = None   
+        self._kich_thuoc = 0
+    def push(self, du_lieu):
+        node_moi = Node(du_lieu)
+        node_moi.tiep = self._dinh
+        self._dinh = node_moi
+        self._kich_thuoc += 1
+
+    def pop(self):
+
+        if self.is_empty():
+            return None
+        du_lieu = self._dinh.du_lieu
+        self._dinh = self._dinh.tiep
+        self._kich_thuoc -= 1
+        return du_lieu
+
+    def peek(self):
+        if self.is_empty():
+            return None
+        return self._dinh.du_lieu
+
+    def is_empty(self):
+        return self._dinh is None
+
+    def kich_thuoc(self):
+        return self._kich_thuoc
+
+
+class Queue:
+
+    def __init__(self):
+        self._dau = None    
+        self._duoi = None   
+        self._kich_thuoc = 0
+
+    def enqueue(self, du_lieu):
+        node_moi = Node(du_lieu)
+        if self._duoi is None:
+            self._dau = node_moi
+            self._duoi = node_moi
+        else:
+            self._duoi.tiep = node_moi
+            self._duoi = node_moi
+        self._kich_thuoc += 1
+
+    def dequeue(self):
+
+        if self.is_empty():
+            return None
+        du_lieu = self._dau.du_lieu
+        self._dau = self._dau.tiep
+        if self._dau is None:
+            self._duoi = None
+        self._kich_thuoc -= 1
+        return du_lieu
+
+    def peek(self):
+        if self.is_empty():
+            return None
+        return self._dau.du_lieu
+
+    def is_empty(self):
+        return self._dau is None
+
+    def kich_thuoc(self):
+        return self._kich_thuoc
+
+    def duyet(self):
+        hien_tai = self._dau
+        while hien_tai is not None:
+            yield hien_tai.du_lieu
+            hien_tai = hien_tai.tiep
+
+# CÁC HÀM TIỆN ÍCH TỰ CÀI ĐẶT
 
 def chia_chuoi(chuoi_goc, ky_tu_phan_cach):
-
     ket_qua = DanhSachLienKet()
     tu_hien_tai = ""
     i = 0
     chieu_dai = 0
-
+    
     for c in chuoi_goc:
         chieu_dai += 1
         
@@ -126,12 +238,12 @@ def chia_chuoi(chuoi_goc, ky_tu_phan_cach):
         else:
             tu_hien_tai += ky_tu
         i += 1
-
+        
+    # Thêm phần tử cuối cùng
     ket_qua.them_cuoi(tu_hien_tai)
     return ket_qua
 
 def loai_bo_khoang_trang(chuoi_goc):
-
     if chuoi_goc == "":
         return ""
     
@@ -158,7 +270,6 @@ def loai_bo_khoang_trang(chuoi_goc):
     return ket_qua
 
 def chuoi_sang_so(chuoi):
-
     so_nguyen = 0
     i = 0
     chieu_dai = 0
@@ -167,7 +278,6 @@ def chuoi_sang_so(chuoi):
     
     while i < chieu_dai:
         ky_tu = chuoi[i]
-        # Lấy giá trị mã ascii (ord) trừ đi ascii của '0'
         if '0' <= ky_tu <= '9':
             gia_tri = ord(ky_tu) - ord('0')
             so_nguyen = so_nguyen * 10 + gia_tri
@@ -182,7 +292,7 @@ def chuoi_co_so(chuoi):
 
 def so_ngay_trong_thang(thang):
     if thang == 2:
-        return 29
+        return 29 
     if thang == 4 or thang == 6 or thang == 9 or thang == 11:
         return 30
     return 31
@@ -195,7 +305,7 @@ def kiem_tra_dinh_dang_ngay(chuoi_ngay):
         
     if chieu_dai != 10:
         return False
-
+        
     if chuoi_ngay[4] != '-' or chuoi_ngay[7] != '-':
         return False
         
@@ -220,6 +330,7 @@ def kiem_tra_dinh_dang_ngay(chuoi_ngay):
     return True
 
 def kiem_tra_dinh_dang_gio(chuoi_gio):
+
     chieu_dai = 0
     for c in chuoi_gio:
         chieu_dai += 1
@@ -267,7 +378,6 @@ def chuan_hoa_ten(chuoi):
     i = 0
     while i < chieu_dai:
         ky_tu = chuoi[i]
-
         if ky_tu == ' ':
             ket_qua += ky_tu
             dau_tu = True
@@ -275,7 +385,7 @@ def chuan_hoa_ten(chuoi):
             continue
             
         ma_ascii = ord(ky_tu)
-        
+
         if dau_tu:
             if 97 <= ma_ascii <= 122:
                 ket_qua += chr(ma_ascii - 32)
@@ -283,12 +393,11 @@ def chuan_hoa_ten(chuoi):
                 ket_qua += ky_tu
             dau_tu = False
         else:
-            # Nếu là chữ in hoa (A-Z: 65-90), chuyển thành chữ thường (+32)
             if 65 <= ma_ascii <= 90:
                 ket_qua += chr(ma_ascii + 32)
             else:
                 ket_qua += ky_tu
-                
+                dau_tu = True
         i += 1
         
     return ket_qua
