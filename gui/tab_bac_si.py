@@ -1,7 +1,6 @@
 # gui/tab_bac_si.py
 
 # TabBacSi — Tab quản lý Bác Sĩ (CRUD)
-# Phụ trách: [Thành viên 1]
 
 import tkinter as tk
 from tkinter import messagebox

@@ -1,8 +1,7 @@
 # gui/tab_lich_hen.py
-# ============================================================
 # TabLichHen — Tab quản lý Lịch Hẹn (CRUD + kiểm tra trùng)
-# Phụ trách: [Thành viên 3]
-# ============================================================
+
+
 import tkinter as tk
 from tkinter import messagebox
 from gui.base_tab import BaseTab
@@ -23,7 +22,7 @@ class TabLichHen(BaseTab):
         self.ma_dang_chon = ""
         self._thiet_lap_giao_dien()
 
-    # ------------------------------------------------------------------
+
     def _thiet_lap_giao_dien(self):
         # Tab lịch hẹn có nhiều trường hơn nên dùng 2 hàng
         khung_nhap = tk.Frame(self.frame)
@@ -54,7 +53,7 @@ class TabLichHen(BaseTab):
         self.bang.bind("<<TreeviewSelect>>", self._chon_hang)
         self._tai_du_lieu()
 
-    # ------------------------------------------------------------------
+
     def _chon_hang(self, event):
         chon = self.bang.selection()
         if chon:
@@ -68,7 +67,7 @@ class TabLichHen(BaseTab):
             self.e_gio.delete(0, tk.END);  self.e_gio.insert(0, gio_str)
             self.e_tt.delete(0, tk.END);   self.e_tt.insert(0, gv[5])
 
-    # ------------------------------------------------------------------
+
     def _kiem_tra(self, bn, bs, ngay, gio, tt):
         if bn == "" or bs == "" or ngay == "" or gio == "" or tt == "":
             messagebox.showwarning("Canh bao", "Vui long nhap du thong tin!")
@@ -79,7 +78,7 @@ class TabLichHen(BaseTab):
             messagebox.showerror("Loi", "Gio khong hop le (HH:MM)!"); return False
         return True
 
-    # ------------------------------------------------------------------
+    
     def _xu_ly_them(self):
         bn = self.e_bn.get(); bs = self.e_bs.get(); ngay = self.e_ngay.get()
         gio = self.e_gio.get(); tt = self.e_tt.get()
@@ -121,7 +120,7 @@ class TabLichHen(BaseTab):
         ghi_file(FILE_LICH_HEN, ds)
         self._lam_moi()
 
-    # ------------------------------------------------------------------
+   
     def _lam_moi(self):
         self.ma_dang_chon = ""
         for e in (self.e_bn, self.e_bs, self.e_ngay, self.e_gio, self.e_tt):

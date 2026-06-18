@@ -1,7 +1,7 @@
 # gui/app.py
 
 # QuanLyLichKhamApp — Class chính lắp ráp toàn bộ ứng dụng
-# Phụ trách: Trưởng nhóm
+
 
 import tkinter as tk
 from tkinter import ttk, messagebox
@@ -22,7 +22,7 @@ from gui.tab_bao_cao   import TabBaoCao
 
 class QuanLyLichKhamApp:
     """
-    Class chính của ứng dụng.
+    Class chính
     Chịu trách nhiệm:
       - Tạo cửa sổ và Notebook
       - Khởi tạo shared state (undo_stack, hang_cho)

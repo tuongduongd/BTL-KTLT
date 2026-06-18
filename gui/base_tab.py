@@ -19,10 +19,10 @@ class BaseTab:
 
     def __init__(self, frame, undo_stack, fn_cap_nhat_trang_thai, fn_nut_undo):
         """
-        frame                  : tk.Frame của tab này (đã được tạo sẵn bởi app.py)
-        undo_stack             : Stack dùng chung toàn ứng dụng
-        fn_cap_nhat_trang_thai : hàm callback để cập nhật thanh trạng thái bên dưới
-        fn_nut_undo            : hàm callback để bật/tắt nút Undo
+        frame                  : tk.Frame của tab này (đã được tạo bởi app.py)
+        undo_stack             : Stack dùng chung
+        fn_cap_nhat_trang_thai : hàm callback cập nhật thanh trạng thái bên dưới
+        fn_nut_undo            : hàm callback bật,tắt nút Undo
         """
         self.frame = frame
         self.undo_stack = undo_stack

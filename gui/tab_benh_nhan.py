@@ -1,7 +1,6 @@
 # gui/tab_benh_nhan.py
 
 # TabBenhNhan — Tab quản lý Bệnh Nhân (CRUD)
-# Phụ trách: [Thành viên 2]
 
 import tkinter as tk
 from tkinter import messagebox
