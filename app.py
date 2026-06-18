@@ -1,7 +1,7 @@
 # gui/app.py
 
 # QuanLyLichKhamApp — Class chính lắp ráp toàn bộ ứng dụng
-# Phụ trách: Trưởng nhóm
+# Phụ trách: Đỗ Tùng Dương
 
 import tkinter as tk
 from tkinter import ttk, messagebox
