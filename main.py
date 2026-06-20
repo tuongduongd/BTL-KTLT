@@ -256,7 +256,6 @@ def menu_bac_si():
             break
 
 def menu_benh_nhan():
-    from cau_truc_du_lieu import kiem_tra_sdt
     ds_bn = doc_danh_sach_benh_nhan()
     while True:
         cls()
@@ -303,7 +302,6 @@ def menu_benh_nhan():
             break
 
 def menu_lich_hen():
-    from cau_truc_du_lieu import kiem_tra_dinh_dang_ngay, kiem_tra_dinh_dang_gio
     ds_lh = doc_danh_sach_lich_hen()
     while True:
         cls()
